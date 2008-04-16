@@ -17,6 +17,8 @@ class ItunesLinkMaker
   
   TYPE_INDICES = { 0 => :name, 1 => :album, 2 => :artist }
   
+  OPTION_ORDER = [ 'WOURLEncoding', 'lang', 'output', 'partnerId', 'LS_PARAM', 'country', 'term', 'media' ]
+  
   @default_options = {
     'media'         => 'music',
     'country'       => 'US',
@@ -37,7 +39,7 @@ class ItunesLinkMaker
   def self.quick_search(query, options={})
     search(query, options).first
   end
-
+  
 private
   def self.parse_html(html)
     doc = Hpricot(html)
@@ -54,10 +56,11 @@ private
   end
   
   def self.get_html(query, options={})
-    open("#{SEARCH_URL}?term=#{CGI.escape(query)}&#{serialize(options)}").read
+    options['term'] = CGI.escape(query)
+    open("#{SEARCH_URL}?#{serialize(options)}").read
   end
   
   def self.serialize(options={})
-    options.map { |k, v| "#{k}=#{v}" }.join('&')
+    options.sort_by { |k, v| OPTION_ORDER.index(k) }.map { |k, v| "#{k}=#{v}" }.join('&')
   end
 end
