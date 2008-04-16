@@ -90,4 +90,3 @@ describe "Itunes quick search with multiple hits" do
     quick_search.should == expected
   end
 end
-

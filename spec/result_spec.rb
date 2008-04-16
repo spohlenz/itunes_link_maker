@@ -27,25 +27,25 @@ describe ItunesLinkMaker::Result do
   
   it "should be equal to a result with identical name, type and url" do
     r1, r2 = create_result, create_result
-    r1.should == r2
+    r1.should eql(r2)
   end
   
   it "should not be equal to a result with a different name" do
     r1 = create_result
     r2 = create_result(:name => 'Different')
-    r1.should_not == r2
+    r1.should_not eql(r2)
   end
   
   it "should not be equal to a result with a different type" do
     r1 = create_result
     r2 = create_result(:type => 'Different')
-    r1.should_not == r2
+    r1.should_not eql(r2)
   end
   
   it "should not be equal to a result with a different display url" do
     r1 = create_result
     r2 = create_result(:display_url => 'Different')
-    r1.should_not == r2
+    r1.should_not eql(r2)
   end
   
   it "should GET the display page when accessing the url" do
@@ -58,5 +58,12 @@ describe ItunesLinkMaker::Result do
     r = create_result
     r.stub!(:open).and_return(@open_result)
     r.url.should == 'http://phobos.apple.com/WebObjects/MZStore.woa/wa/viewAlbum?i=2522315&id=2522333&s=143441'
+  end
+  
+  it "should work correctly with uniq" do
+    r1 = create_result
+    r2 = create_result
+    r3 = create_result(:name => 'Different')
+    [r1, r2, r3].uniq.should == [r1, r3]
   end
 end

@@ -15,9 +15,15 @@ class ItunesLinkMaker
       (doc/'textarea a').first['href']
     end
     
-    def ==(result)
+    def eql?(result)
       vars = [ '@name', '@type', '@display_url' ]
       vars.all? { |v| instance_variable_get(v) == result.instance_variable_get(v) }
+    end
+    
+    alias_method :==, :eql?
+    
+    def hash
+      "#{@name}#{@type}#{@display_url}".hash
     end
   end
 end
