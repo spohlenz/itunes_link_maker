@@ -1,5 +1,11 @@
 require File.dirname(__FILE__) + '/../lib/itunes_link_maker.rb'
 
+FIXTURES_DIR = File.join(File.dirname(__FILE__), 'fixtures')
+
+def read_fixture(file)
+  open(File.join(FIXTURES_DIR, file)).read
+end
+
 describe ItunesLinkMaker do
   setup do
     @open_result = mock('open result', :read => '')
@@ -23,5 +29,37 @@ describe ItunesLinkMaker do
       "http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStoreServices.woa/wa/itmsSearch?WOURLEncoding=ISO8859_1&lang=1&output=lm&country=US&term=search+query&media=music"
     ).and_return(@open_result)
     search
+  end
+end
+
+
+describe "Itunes link search with no hits" do
+  setup do
+    @open_result = mock('open result', :read => read_fixture('no_results.html'))
+    ItunesLinkMaker.stub!(:open).and_return(@open_result)
+  end
+  
+  def search
+    ItunesLinkMaker.search('kafoozl')
+  end
+  
+  it "should return an empty array" do
+    search.should be_empty
+  end
+end
+
+
+describe "Itunes link search with multiple hits" do
+  setup do
+    @open_result = mock('open result', :read => read_fixture('has_results.html'))
+    ItunesLinkMaker.stub!(:open).and_return(@open_result)
+  end
+  
+  def search
+    ItunesLinkMaker.search('postal service such great heights')
+  end
+  
+  it "should return a non-empty array" do
+    search.should_not be_empty
   end
 end
