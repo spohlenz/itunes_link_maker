@@ -17,11 +17,9 @@ spec = Gem::Specification.new do |s|
   s.email = "sam@sampohlenz.com"
   s.platform = Gem::Platform::RUBY
   s.summary = "Create iTunes links"
-  s.files = FileList["{lib}/**/*"].to_a
+  s.files = FileList[ "{lib}/*" ].to_a
   s.require_path = "lib"
-  s.test_files = FileList["{test}/**/*test.rb"].to_a
-  s.has_rdoc = true
-  s.extra_rdoc_files = ["README"]
+  s.test_files = FileList[ "{spec}/**/*" ].to_a
 end
  
 Rake::GemPackageTask.new(spec) do |pkg| 
