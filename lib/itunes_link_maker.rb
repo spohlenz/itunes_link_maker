@@ -1,6 +1,8 @@
 require 'open-uri'
 require 'cgi'
 
+require File.join(File.dirname(__FILE__), 'result')
+
 class ItunesLinkMaker
   MEDIA = [ 'all', 'music', 'movie', 'shortFilm', 'tvShow',
             'musicVideo', 'audiobook', 'podcast', 'iTunesU' ]
@@ -18,7 +20,7 @@ class ItunesLinkMaker
 
 private
   def self.parse_html(html)
-    []
+    [Result.new]
   end
   
   def self.get_html(query, media, country)
