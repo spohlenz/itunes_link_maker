@@ -21,6 +21,10 @@ class ItunesLinkMaker
     html = get_html(query, media, country)
     parse_html(html)
   end
+  
+  def self.quick_search(query, media='music', country='US')
+    search(query, media, country).first
+  end
 
 private
   def self.parse_html(html)
