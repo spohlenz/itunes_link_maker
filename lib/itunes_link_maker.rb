@@ -56,11 +56,14 @@ private
   end
   
   def self.get_html(query, options={})
-    options['term'] = CGI.escape(query)
-    open("#{SEARCH_URL}?#{serialize(options)}").read
+    open(url_for(options.merge('term' => query))).read
+  end
+  
+  def self.url_for(options)
+    "#{SEARCH_URL}?#{serialize(options)}"
   end
   
   def self.serialize(options={})
-    options.sort_by { |k, v| OPTION_ORDER.index(k) }.map { |k, v| "#{k}=#{v}" }.join('&')
+    options.sort_by { |k, v| OPTION_ORDER.index(k) }.map { |k, v| "#{k}=#{CGI.escape(v.to_s)}" }.join('&')
   end
 end
