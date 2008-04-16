@@ -1,3 +1,6 @@
+require 'open-uri'
+require 'cgi'
+
 class ItunesLinkMaker
   MEDIA = [ 'all', 'music', 'movie', 'shortFilm', 'tvShow',
             'musicVideo', 'audiobook', 'podcast', 'iTunesU' ]
@@ -6,7 +9,19 @@ class ItunesLinkMaker
                 'GR', 'IE', 'IT', 'JP', 'LU', 'NL', 'NZ', 'NO',
                 'PT', 'ES', 'SE', 'CH', 'GB', 'US' ]
   
-  def self.create(query, media='music', country='US')
+  SEARCH_URL = "http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStoreServices.woa/wa/itmsSearch?WOURLEncoding=ISO8859_1&lang=1&output=lm"
+  
+  def self.search(query, media='music', country='US')
+    html = get_html(query, media, country)
+    parse_html(html)
+  end
+
+private
+  def self.parse_html(html)
     []
+  end
+  
+  def self.get_html(query, media, country)
+    open("#{SEARCH_URL}&country=#{country}&term=#{CGI.escape(query)}&media=#{media}").read
   end
 end
