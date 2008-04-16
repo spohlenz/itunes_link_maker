@@ -20,7 +20,7 @@ describe ItunesLinkMaker do
   
   it "should send a GET request to the iTunes search URL" do
     ItunesLinkMaker.should_receive(:open).with(
-      "http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStoreServices.woa/wa/itmsSearch?WOURLEncoding=ISO8859_1&lang=1&output=lm&country=US&term=search+query&media=music"
+      "http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStoreServices.woa/wa/itmsSearch?term=search+query&media=music&country=US&output=lm&lang=1&WOURLEncoding=ISO8859_1"
     ).and_return(@open_result)
     search
   end

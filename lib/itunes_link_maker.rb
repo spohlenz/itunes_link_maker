@@ -13,17 +13,29 @@ class ItunesLinkMaker
                 'GR', 'IE', 'IT', 'JP', 'LU', 'NL', 'NZ', 'NO',
                 'PT', 'ES', 'SE', 'CH', 'GB', 'US' ]
   
-  SEARCH_URL = "http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStoreServices.woa/wa/itmsSearch?WOURLEncoding=ISO8859_1&lang=1&output=lm"
+  SEARCH_URL = "http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStoreServices.woa/wa/itmsSearch"
   
   TYPE_INDICES = { 0 => :name, 1 => :album, 2 => :artist }
   
-  def self.search(query, media='music', country='US')
-    html = get_html(query, media, country)
+  @default_options = {
+    'media'         => 'music',
+    'country'       => 'US',
+    'WOURLEncoding' => 'ISO8859_1',
+    'lang'          => '1',
+    'output'        => 'lm'
+  }
+  
+  def self.default_options
+    @default_options
+  end
+  
+  def self.search(query, options={})
+    html = get_html(query, default_options.merge(options))
     parse_html(html).uniq
   end
   
-  def self.quick_search(query, media='music', country='US')
-    search(query, media, country).first
+  def self.quick_search(query, options={})
+    search(query, options).first
   end
 
 private
@@ -41,7 +53,11 @@ private
     result
   end
   
-  def self.get_html(query, media, country)
-    open("#{SEARCH_URL}&country=#{country}&term=#{CGI.escape(query)}&media=#{media}").read
+  def self.get_html(query, options={})
+    open("#{SEARCH_URL}?term=#{CGI.escape(query)}&#{serialize(options)}").read
+  end
+  
+  def self.serialize(options={})
+    options.map { |k, v| "#{k}=#{v}" }.join('&')
   end
 end
