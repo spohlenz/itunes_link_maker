@@ -1,6 +1,10 @@
-require File.dirname(__FILE__) + '/../lib/result.rb'
+require File.dirname(__FILE__) + '/spec_helper.rb'
 
 describe ItunesLinkMaker::Result do
+  setup do
+    @open_result = mock('open result', :read => read_fixture('result.html'))
+  end
+  
   def create_result(options={})
     options = {
       :name => 'Such Great Heights',
@@ -42,5 +46,17 @@ describe ItunesLinkMaker::Result do
     r1 = create_result
     r2 = create_result(:display_url => 'Different')
     r1.should_not == r2
+  end
+  
+  it "should GET the display page when accessing the url" do
+    r = create_result
+    r.should_receive(:open).with("http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStoreServices.woa/wa/itmsSearchDisplayUrl?desc=The+Postal+Service+-+Give+Up+-+Such+Great+Heights&WOURLEncoding=ISO8859_1&lang=1&url=http%3A%2F%2Fphobos.apple.com%2FWebObjects%2FMZStore.woa%2Fwa%2FviewAlbum%3Fi%3D2522315%26id%3D2522333%26s%3D143441").and_return(@open_result)
+    r.url
+  end
+  
+  it "should return the correct url" do
+    r = create_result
+    r.stub!(:open).and_return(@open_result)
+    r.url.should == 'http://phobos.apple.com/WebObjects/MZStore.woa/wa/viewAlbum?i=2522315&id=2522333&s=143441'
   end
 end
