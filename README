@@ -1,0 +1,40 @@
+iTunes Link Maker
+=================
+
+A Ruby interface to generate iTunes URLs from http://apple.com/itunes/linkmaker.
+
+Usage (non-affiliate):
+----------------------
+
+>> require 'itunes_link_maker'
+
+>> results = ItunesLinkMaker.search('my favourite track')
+=> [ array of results ]
+
+>> results[0].url
+=> "http://...."
+
+>> results[0].name
+=> "My Favourite Track"
+
+>> result = ItunesLinkMaker.quick_search('my favourite track')
+=> first result from above
+
+>> result.url
+=> "http://...."
+
+
+Usage (affiliate):
+------------------
+
+>> require 'itunes_link_maker'
+
+>> ItunesLinkMaker.default_options['partnerId'] = XXX
+>> ItunesLinkMaker.default_options['LS_PARAM'] = 'http://click.linksynergy.com/fs-bin/stat?id=XXXXXXXX&offerid=XXXXX&type=X&subid=X&tmpid=XXXX&RD_PARM1='
+
+>> results = ItunesLinkMaker.search('my favourite track')
+=> [ array of results using affiliate url ]
+
+
+
+Copyright (c) 2008 Sam Pohlenz <sam@sampohlenz.com>, released under the MIT license
