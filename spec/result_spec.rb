@@ -66,4 +66,11 @@ describe ItunesLinkMaker::Result do
     r3 = create_result(:name => 'Different')
     [r1, r2, r3].uniq.should == [r1, r3]
   end
+  
+  it "should cache the url" do
+    r = create_result
+    r.should_receive(:open).once.and_return(@open_result)
+    r.url
+    r.url
+  end
 end

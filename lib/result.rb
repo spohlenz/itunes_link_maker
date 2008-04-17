@@ -11,8 +11,7 @@ class ItunesLinkMaker
     end
     
     def url
-      doc = Hpricot(open(@display_url))
-      (doc/'textarea a').first['href']
+      @url ||= get_url
     end
     
     def eql?(result)
@@ -24,6 +23,12 @@ class ItunesLinkMaker
     
     def hash
       "#{@name}#{@type}#{@display_url}".hash
+    end
+    
+  private
+    def get_url
+      doc = Hpricot(open(@display_url))
+      (doc/'textarea a').first['href']
     end
   end
 end
