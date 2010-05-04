@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/spec_helper.rb'
 
 describe ItunesLinkMaker::Result do
-  setup do
+  before(:each) do
     @open_result = mock('open result', :read => read_fixture('result.html'))
   end
   

@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/spec_helper.rb'
 
 describe ItunesLinkMaker do
-  setup do
+  before(:each) do
     @open_result = mock('open result', :read => '')
     ItunesLinkMaker.stub!(:open).and_return(@open_result)
   end
@@ -28,7 +28,7 @@ end
 
 
 describe "Itunes link search with no hits" do
-  setup do
+  before(:each) do
     @open_result = mock('open result', :read => read_fixture('no_results.html'))
     ItunesLinkMaker.stub!(:open).and_return(@open_result)
   end
@@ -44,7 +44,7 @@ end
 
 
 describe "Itunes quick search with no hits" do
-  setup do
+  before(:each) do
     @open_result = mock('open result', :read => read_fixture('no_results.html'))
     ItunesLinkMaker.stub!(:open).and_return(@open_result)
   end
@@ -60,7 +60,7 @@ end
 
 
 describe "Itunes link search with multiple hits" do
-  setup do
+  before(:each) do
     @open_result = mock('open result', :read => read_fixture('has_results.html'))
     ItunesLinkMaker.stub!(:open).and_return(@open_result)
   end
@@ -76,7 +76,7 @@ end
 
 
 describe "Itunes quick search with multiple hits" do
-  setup do
+  before(:each) do
     @open_result = mock('open result', :read => read_fixture('has_results.html'))
     ItunesLinkMaker.stub!(:open).and_return(@open_result)
   end
