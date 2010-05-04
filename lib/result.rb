@@ -6,7 +6,7 @@ class ItunesLinkMaker
     def initialize(name, type, display_url)
       @name = name
       @type = type
-      @display_url = "#{URL_ROOT}#{display_url}"
+      @display_url = display_url
     end
     
     def url
