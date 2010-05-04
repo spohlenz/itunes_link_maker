@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'open-uri'
 require 'cgi'
-require 'hpricot'
+require 'json'
 
 require File.join(File.dirname(__FILE__), 'result')
 
@@ -41,18 +41,9 @@ class ItunesLinkMaker
   end
   
 private
-  def self.parse_html(html)
-    doc = Hpricot(html)
-    
-    result = []
-    (doc/'a.searchResults').each_with_index do |element, i|
-      name = element.inner_text.strip
-      type = TYPE_INDICES[i]
-      url = element['href']
-      
-      result << Result.new(name, type, url)
-    end
-    result
+  def self.parse_html(json)
+    parser = JSON.parse(json)
+    parser.collect { |e| Result.new(e["itemName"], e["mediaType"], e["itemLinkUrl"]) }
   end
   
   def self.get_html(query, options={})
