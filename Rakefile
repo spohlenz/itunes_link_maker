@@ -14,7 +14,7 @@ end
 # Gem specification
 spec = Gem::Specification.new do |s| 
   s.name = "itunes_link_maker"
-  s.version = "1.0"
+  s.version = "1.0.1"
   s.author = "Sam Pohlenz"
   s.email = "sam@sampohlenz.com"
   s.platform = Gem::Platform::RUBY
