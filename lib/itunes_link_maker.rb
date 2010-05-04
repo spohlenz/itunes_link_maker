@@ -24,7 +24,7 @@ class ItunesLinkMaker
     'country'       => 'US',
     'WOURLEncoding' => 'ISO8859_1',
     'lang'          => '1',
-    'output'        => 'lm'
+    'output'        => 'json'
   }
   
   def self.default_options
