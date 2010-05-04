@@ -24,6 +24,7 @@ spec = Gem::Specification.new do |s|
   s.files = FileList[ "{lib}/*" ].to_a
   s.require_path = "lib"
   s.test_files = FileList[ "{spec}/**/*" ].to_a
+  s.add_dependency('json', '>= 1.0.0')
 end
  
 Rake::GemPackageTask.new(spec) do |pkg| 
