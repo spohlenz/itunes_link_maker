@@ -32,8 +32,8 @@ class ItunesLinkMaker
   end
   
   def self.search(query, options={})
-    html = get_html(query, default_options.merge(options))
-    parse_html(html).uniq
+    json = get_json(query, default_options.merge(options))
+    parse_json(json).uniq
   end
   
   def self.quick_search(query, options={})
@@ -41,12 +41,17 @@ class ItunesLinkMaker
   end
   
 private
-  def self.parse_html(json)
-    parser = JSON.parse(json)
-    parser.collect { |e| Result.new(e["itemName"], e["mediaType"], e["itemLinkUrl"]) }
+  def self.parse_json(json)
+    results = []
+    unless json.empty?
+      parser = JSON.parse(json)
+      # FIXME: don't need type argument
+      results = parser["results"].collect { |e| Result.new(e["itemName"], :name, e["itemLinkUrl"]) }
+    end
+    results
   end
   
-  def self.get_html(query, options={})
+  def self.get_json(query, options={})
     open(url_for(options.merge('term' => query))).read
   end
   

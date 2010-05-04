@@ -86,7 +86,7 @@ describe "Itunes quick search with multiple hits" do
   end
   
   it "should return the result object" do
-    expected = ItunesLinkMaker::Result.new('Such Great Heights', :name, '/WebObjects/MZStoreServices.woa/wa/itmsSearchDisplayUrl?desc=The+Postal+Service+-+Give+Up+-+Such+Great+Heights&WOURLEncoding=ISO8859_1&lang=1&url=http%3A%2F%2Fphobos.apple.com%2FWebObjects%2FMZStore.woa%2Fwa%2FviewAlbum%3Fi%3D2522315%26id%3D2522333%26s%3D143441')
+    expected = ItunesLinkMaker::Result.new('Such Great Heights', :name, 'http://itunes.apple.com/us/album/such-great-heights/id2522333?i=2522315&uo=4')
     quick_search.should == expected
   end
 end

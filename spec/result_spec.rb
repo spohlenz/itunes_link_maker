@@ -6,7 +6,7 @@ describe ItunesLinkMaker::Result do
     options = {
       :name => 'Such Great Heights',
       :type => :name,
-      :display_url => '/WebObjects/MZStoreServices.woa/wa/itmsSearchDisplayUrl?desc=The+Postal+Service+-+Give+Up+-+Such+Great+Heights&WOURLEncoding=ISO8859_1&lang=1&url=http%3A%2F%2Fphobos.apple.com%2FWebObjects%2FMZStore.woa%2Fwa%2FviewAlbum%3Fi%3D2522315%26id%3D2522333%26s%3D143441'
+      :display_url => 'http://phobos.apple.com/WebObjects/MZStore.woa/wa/viewAlbum?i=2522315&id=2522333&s=143441'
     }.merge(options)
     
     ItunesLinkMaker::Result.new(options[:name], options[:type], options[:display_url])

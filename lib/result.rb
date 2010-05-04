@@ -10,7 +10,7 @@ class ItunesLinkMaker
     end
     
     def url
-      @url ||= get_url
+      @display_url
     end
     
     def eql?(result)
